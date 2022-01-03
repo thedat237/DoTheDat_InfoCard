@@ -1,0 +1,46 @@
+.demo-card-img{
+    width: 500px;
+}
+.demo-card{
+    position: relative;
+}
+.form-demo-card{
+    width: 50%;
+    /* margin-left: 30px; */
+}
+.demo-card-qr{
+    position: absolute;
+    top: 15px;
+    left: 17px;
+    border: 2px solid white;
+    border-radius: 16px;
+}
+.demo-card-name{
+    position: absolute;
+    color: white;
+    top: 246px;
+    left: 22px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 33px;
+}
+.card-demo-luxury{
+    width: 100px;
+}
+.avatrUrl{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+.border-avatarUrl{
+    display: inline-block;
+    border: 3px solid transparent;
+    border-radius: 50px;
+    background: 
+        linear-gradient(to right, white, white), 
+        linear-gradient(to right, #275852 , #471926) ;
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    padding: 2px;
+}

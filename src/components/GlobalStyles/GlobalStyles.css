@@ -1,0 +1,43 @@
+:root{
+    --gray-dark: #272e35;
+    --gray-blur: #a5b2c3;
+    --gray-light: #f4f4f4;
+    --primary-color: #0057ac;
+    --secondary-color: #fbda0c;
+    --backGround-color: #f0ede8;
+    --pink-blur: #ff858d;
+    --yellow-star: #ffcb46;
+}
+.container{
+    padding-left: 100px !important;
+    padding-right: 100px !important;
+}
+.h-646{
+    height: 646px;
+}
+.banner__heading{
+    font-size: 45px;
+    line-height: 1.2;
+    margin-bottom: 40px;
+    color: white;
+}
+.banner__heading span{
+    display: block;
+}
+.fw-500{
+    font-weight: 500;
+}
+.section-desc span{
+    display: block;
+}
+.bg-auth{
+    background-image: linear-gradient(to right bottom , #275852, #773636, #471926);
+    background-size: cover;
+    height: 100vh;
+}
+.text-decoration-none{
+    text-decoration: none !important;
+}
+.cursor-pointer{
+    cursor: pointer;
+}

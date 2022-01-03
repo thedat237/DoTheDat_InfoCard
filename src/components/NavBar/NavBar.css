@@ -1,0 +1,32 @@
+.logo-img{
+    object-fit: cover;
+    width: 150px;
+}
+.header-menu{
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+.text{
+    color: black;
+}
+.text:hover{
+    background: linear-gradient(90deg, #275852, #471926);
+    background-clip: text ;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+.header-menu-item:not(:first-child){
+    margin-left: 75px;
+}
+.disabled{
+    pointer-events: none;
+}
+.count-items{
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+.cart{
+    cursor: pointer;
+}

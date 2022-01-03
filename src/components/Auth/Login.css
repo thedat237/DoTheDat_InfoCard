@@ -1,0 +1,24 @@
+.row{
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 3px 3px 12px grey;
+}
+.login-img{
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+
+}
+.btn1{
+    border: none;
+    outline: none;
+    height: 50px;
+    width: 100%;
+    background-color: black;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.2s linear;
+}
+.btn1:hover{
+    background-image: linear-gradient(to right bottom , #275852, #020202, #471926);
+}

@@ -1,0 +1,15 @@
+.modal-cart{
+    margin-right: 332px !important;
+    margin-top: 50px !important;
+}
+.modal-title{
+    font-size: 15px;
+    color: grey;
+}
+.modal-footer{
+    justify-content: flex-end !important;
+}
+.img-card{
+    width: 80px;
+    object-fit: cover;
+}

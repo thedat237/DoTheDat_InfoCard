@@ -1,0 +1,16 @@
+.banner-step{
+    background-color: #020A11;
+}
+.step-card-img{
+    transform: translateX(50px);
+    width: 600px;
+}
+.step-infor{
+    width: 45%;
+}
+.step-phone-img{
+    width: 220px;
+}
+/* .step-phone-img:not(:first-child){
+    margin-left: 50px;
+} */

@@ -1,0 +1,92 @@
+.img-info-scan{
+    height: 650px;
+    object-fit: cover;
+}
+.line{
+    position: absolute;
+    height: 3px;
+    width: 140px;
+    border-radius: 20px;
+    background-color: #3b3b3b;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 35px;
+}
+.header-name{
+    position: absolute;
+    top: 145px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 261px;
+}
+.scanned-name{
+    /* position: absolute;
+    top: 132px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    width: 261px;
+    text-align: center; */
+}
+.scanned-address{
+    /* position: absolute;
+    top: 28px; */
+    line-height: 15px;
+}
+.border-scanned{
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px;
+}
+.scanned-avatar{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.scanned-card{
+    width: 248px;
+    height: 55px;
+    color: black;
+    background-color: #f1f1f1;
+    box-shadow: 0 4px 4px rgba(36, 36, 36, 0.158);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.scanned-card-0{
+    position: absolute;
+    bottom: 364px;
+}
+.scanned-card-1{
+    position: absolute;
+    bottom: 298px;
+}
+.scanned-card-2{
+    position: absolute;
+    bottom: 232px;
+}
+.scanned-card-3{
+    position: absolute;
+    bottom: 166px;
+}
+.scanned-qr{
+    position: absolute;
+    top: 15px;
+    left: 17px;
+    border: 2px solid white;
+    border-radius: 16px;
+}
+.logo-social{
+    width: 30px;
+    object-fit: cover;
+}
