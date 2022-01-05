@@ -1,5 +1,5 @@
 .modal-cart{
-    margin-right: 332px !important;
+    margin-right: 258px !important;
     margin-top: 50px !important;
 }
 .modal-title{
@@ -12,4 +12,8 @@
 .img-card{
     width: 80px;
     object-fit: cover;
+}
+.btn-remove{
+    width: 25px;
+    height: 25px;
 }

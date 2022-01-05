@@ -15,6 +15,8 @@ import AuthContext from './context/auth';
 import axios, { addJwt } from "./util/http"
 import store from './redux/store/store';
 import { Provider } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons'
 function App() {
   const [ authUser, setAuthUser] = useState(null)
   const [checkingAuthUserDone, setCheckingAuthUserDone] = useState(false)
@@ -81,7 +83,7 @@ function App() {
       <div className="App">
         <AuthContext.Provider value={{user: authUser, setUser:setAuthUser}}>
           {/* <LandingPage/> */}
-          {showGoToTop && <button className='btn btn-dark goToTop' onClick={handleGoToTop}> Go to top</button>}
+          {showGoToTop && <button className='btn btn-dark goToTop' onClick={handleGoToTop}><FontAwesomeIcon icon={faAngleDoubleUp}/></button>}
             <NavBar />
             <Routes>
               <Route path="/" element={<HomePage/>}/>

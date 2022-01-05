@@ -13,7 +13,7 @@ import ModalEmptyInput from '../Modal/ModalEmptyInput'
 import DropDownLink from '../../DropDown/DropDownLink'
 import { connect, useDispatch } from 'react-redux'
 import { SAVECART } from '../../../redux/reducer/infor'
-import { ADDPRODUCT } from '../../../redux/reducer/cart'
+import { ADDPRODUCT, BUYPRODUCT } from '../../../redux/reducer/cart'
 const Banner04 = ({Infor, Cart}) => {
     const authCtx = useContext(AuthContext)
     const [selectedImg, setSelectedImg] = useState(cardType[0].src)
@@ -47,8 +47,13 @@ const Banner04 = ({Infor, Cart}) => {
     const [showModal, setShowModal] = useState(false);
     
     const handleBuyItems = () => {
+        dispatch({
+            type: BUYPRODUCT,
+            payload: Cart.product
+        })
         setShowModal(false)
     }
+
     // const handleShowModal = () => {
     //     setShowModal(true)
     //     console.log(socials.socialLink);
@@ -136,6 +141,7 @@ const Banner04 = ({Infor, Cart}) => {
             nameUser: name,
             avatarUrl: (avatarUrl === "" ? "" : avatarUrl.preview),
             nameCard: selectedImg,
+            overview: overview,
             colorCard: selectedNameCard,
             qrImage: imageQRcode,
             social: (socials[0].socialLink === "" ? [] : socials)
@@ -158,7 +164,7 @@ const Banner04 = ({Infor, Cart}) => {
             <div className='container m-5'>
                 <div className='d-flex flex-column align-items-center'>
                     <h2 className='banner__heading text-dark fw-bold'>
-                        Infor card
+                        Info card
                     </h2>
                     <h2 className='banner__heading text-dark fw-bold'>
                         Thẻ cá nhân thông minh

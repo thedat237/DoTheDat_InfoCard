@@ -3,20 +3,34 @@ import "./ModalCart.css"
 import bannerCard5 from "../../../assets/banner_card5.png"
 import { Modal, Button} from 'react-bootstrap'
 import { connect, useDispatch } from 'react-redux'
-import { REMOVEPRODUCT, UPDATECART } from '../../../redux/reducer/cart'
+import { BUYPRODUCT, REMOVEPRODUCT, UPDATECART, UPDATESTORAGE } from '../../../redux/reducer/cart'
 import CheckBox from '../../CheckBox/CheckBox'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const ModalCart = (props) => {
     const [checkedBox, setCheckedBox] = useState(false)
+    const [showModal, setShowModal] = useState(false)
     const [result, setResult] = useState([])
     const dispatch = useDispatch()
 
+    const unSelect = (item) => {
+        // setCheckedBox(false)
+        let dataUnSelect = result.filter((items) => items.id !== item.id)
+        setResult(dataUnSelect)
+        console.log(dataUnSelect);
+    }
+
+    useEffect(() => {
+        console.log("useEffect", result);
+    },[checkedBox])
+
     const selectedInfoCard = (items) => {
-        setCheckedBox(true)
-        let data = result
-        data.push(items)
-        setResult(data)
-        console.log(data);
+        // setCheckedBox(true)
+        let dataSelect = result
+        dataSelect.push(items)
+        setResult(dataSelect)
+        console.log(dataSelect);
     }
 
     const removeProduct = (items) => {
@@ -26,15 +40,25 @@ const ModalCart = (props) => {
         })
     }
 
+    const buyProduct = () => {
+        dispatch({
+            type: BUYPRODUCT,
+            payload: result
+        })
+        setShowModal(false)
+    }
+
+
     const updateCart = () => {
         const dataCart = JSON.parse(localStorage.getItem("Cart"))
+        console.log(dataCart);
         if(props.Cart.length === 0) {
             if(dataCart){
                 dispatch({
                     type: UPDATECART,
-                    payload: dataCart
+                    payload: dataCart === null ? [] : dataCart
                 })
-            }
+            } 
         }
     }
 
@@ -54,15 +78,19 @@ const ModalCart = (props) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {props.Cart.length !== 0 && props.Cart.map((item,idx) => (
+                {props.Cart.map((item,idx) => (
                     <div className='d-flex align-items-center justify-content-between' key={idx}>
                         <div className='d-flex align-items-center'>
-                            <CheckBox checked={checkedBox} unSelected={() => setCheckedBox(false)} Selected={() => selectedInfoCard(item)}/>
-                            <img src={item.nameCard} className='img-card me-3'/>
+                            <CheckBox 
+                                checked={checkedBox} 
+                                unSelected={() => unSelect(item)} 
+                                selected={() => selectedInfoCard(item)
+                            }/>
+                            <img src={item.nameCard} className='img-card mx-2'/>
                             <div className='d-flex flex-column'>
                                 <div className='d-flex'>
                                     <span className='me-2'>Tên trên thẻ:</span>
-                                    <span>{item.namUser}</span>
+                                    <span>{item.nameUser}</span>
                                 </div>
                                 <div className='d-flex'>
                                     <span className='me-2'>Loại thẻ:</span>
@@ -71,12 +99,23 @@ const ModalCart = (props) => {
                             </div>
                         </div>
                         <span>159,000đ</span>
-                        <button type="button" class="btn btn-danger" onClick={() => removeProduct(item)}>X</button>
+                        <button type="button" 
+                            class="btn btn-danger btn-remove d-flex align-items-center justify-content-center" 
+                            onClick={() => removeProduct(item)}
+                        >
+                            <FontAwesomeIcon icon={faTrash}/>
+                        </button>
                     </div>
                 ))}
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={props.onHide}>Đặt mua</Button>
+                <Button onClick={() => 
+                    {buyProduct()
+                    props.onHide()
+                }}
+                >
+                    Đặt mua
+                </Button>
             </Modal.Footer>
         </Modal>
     )

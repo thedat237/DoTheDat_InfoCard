@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
 import "./ModalSuccess.css"
 import { Modal, Button } from 'react-bootstrap'
+import { connect, useDispatch } from 'react-redux'
+import { BUYPRODUCT, UPDATECART } from '../../../redux/reducer/cart'
 
-export default function ModalSuccess(props) {
+const ModalSuccess = (props) => {
     const userInfor= JSON.parse(localStorage.getItem("dataQR"))
-
+    const dispatch = useDispatch()
     const [valueModal, setValueModal] = useState({
         email: "",
         phoneNumber: "",
@@ -20,6 +22,16 @@ export default function ModalSuccess(props) {
                 [field] : newValue
             }
         })
+    }
+
+    const Shopping = () => {
+        let result = props.Cart.filter(item => props.ShoppingCart.every(data => data.id !== item.id))
+        console.log(result);
+        dispatch({
+            type: UPDATECART,
+            payload: result
+        })
+        localStorage.setItem("Cart", JSON.stringify(result))
     }
 
     return (
@@ -80,10 +92,17 @@ export default function ModalSuccess(props) {
                 </div> 
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={props.handleCloseModal}>
+                <Button variant="primary" onClick={() => {props.handleCloseModal()
+                    Shopping()
+                }}>
                     Mua
                 </Button>
             </Modal.Footer>
         </Modal>
     )
 }
+const maptoStatetoProps = (state) => ({
+    Cart: state.Cart.product,
+    ShoppingCart: state.Cart.cart
+})
+export default connect(maptoStatetoProps, null)(ModalSuccess)

@@ -29,9 +29,9 @@ export default function Banner03() {
                 <h2 className='banner__heading text-dark'>
                     <span>Bước 2: Thêm thông tin</span>cá nhân vào thẻ
                 </h2>
-                <div className='step-infor-2 d-flex align-items-center'>
-                    <img src={bannerSocial}/>
-                    <h3 className='section-desc'><span>Khi nhận hàng, bạn nhận</span><span>được thẻ và tờ hướng dẫn,</span><span>bạn làm theo tờ hướng dẫn</span><span>để tự thêm thông tin cá</span> nhân vào thẻ.</h3>
+                <div className='step-infor-2 d-flex'>
+                    <img src={bannerSocial} className='banner-social me-4'/>
+                    <h3 className='section-desc mt-5'><span>Khi nhận hàng, bạn nhận</span><span>được thẻ và tờ hướng dẫn,</span><span>bạn làm theo tờ hướng dẫn</span><span>để tự thêm thông tin cá</span> nhân vào thẻ.</h3>
                 </div>
             </div>
 

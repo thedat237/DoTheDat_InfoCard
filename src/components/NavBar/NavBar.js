@@ -6,18 +6,34 @@ import AuthContext from '../../context/auth'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons'
 import {Badge} from "react-bootstrap"
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import ModalCart from '../HomePage/Modal/ModalCart'
-const NavBar = ({Infor, Cart}) => {
+import { BUYPRODUCT, UPDATECART } from '../../redux/reducer/cart'
+import ModalSuccess from '../HomePage/Modal/ModalSuccess'
+const NavBar = ({Infor, CartItems, CartProduct}) => {
     const authCtx = useContext(AuthContext)
     const [showModalCart,setShowModalCart] =useState(false)
-    const userInfor= JSON.parse(localStorage.getItem("dataQR"))
-    // useEffect(()=>{
-    //         window.addEventListener("storage",(e) => {
-    //     setDisplay(true)
-    //     console.log('alo')
-    //  });
-    // },[userInfor])
+    const [showModal, setShowModal] = useState(false)
+    const dispatch = useDispatch()
+    
+    const updateCart = () => {
+        const dataCart = JSON.parse(localStorage.getItem("Cart"))
+        if(CartItems === 0) {
+            if(dataCart){
+                dispatch({
+                    type: UPDATECART,
+                    payload: dataCart
+                })
+            }
+        }
+    }
+    const handleBuyItems = () => {
+        setShowModal(false)
+    }
+
+    useEffect(() => {
+        updateCart()
+    },[])
 
     return (
         <div className="d-flex align-items-center ">
@@ -57,13 +73,17 @@ const NavBar = ({Infor, Cart}) => {
                             <div className='d-flex align-items-center cart'>
                                 <div className='position-relative me-3' onClick={() => setShowModalCart(true)}>
                                     <FontAwesomeIcon icon={faCreditCard} className=' fs-3'/>
-                                    {Cart ? <Badge bg="success" className='count-items'>{Cart}</Badge> : null}
+                                    {CartItems ? <Badge bg="success" className='count-items'>{CartItems}</Badge> : null}
                                 </div>
                                 <div className='p-2 bg-dark text-white rounded'>
                                     {authCtx.user.username}
                                 </div>
                             </div>
-                            <ModalCart show={showModalCart} onHide={() => setShowModalCart(false)}/>
+                            <ModalCart show={showModalCart} 
+                                onHide={() => {setShowModal(true)
+                                    setShowModalCart(false)
+                            }}/>
+                            <ModalSuccess show={showModal} onHide={handleBuyItems} handleCloseModal={handleBuyItems}/>
                         </>
                         :
                         <>
@@ -98,6 +118,7 @@ const NavBar = ({Infor, Cart}) => {
 }
 const maptoStatetoProps = (state) => ({
     Infor: state.Infor.nameUser,
-    Cart: state.Cart.items
+    CartItems: state.Cart.items,
+    CartProduct: state.Cart.product
 })
 export default connect(maptoStatetoProps, null)(NavBar)

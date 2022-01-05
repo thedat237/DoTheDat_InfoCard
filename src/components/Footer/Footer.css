@@ -1,4 +1,13 @@
 .fb-img{
     object-fit: cover;
-    width: 80px;
+    width: 30px;
+}
+.feature-link:not(:first-child){
+    margin-left: 20px;
+}
+.footer-line{
+    background-color: white;
+    width: 100%;
+    height: 1px;
+    border-radius: 20px;
 }

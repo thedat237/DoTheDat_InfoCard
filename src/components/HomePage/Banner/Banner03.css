@@ -14,3 +14,7 @@
 /* .step-phone-img:not(:first-child){
     margin-left: 50px;
 } */
+.banner-social{
+    height: 600px;
+    object-fit: cover;
+}

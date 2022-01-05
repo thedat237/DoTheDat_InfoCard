@@ -7,6 +7,7 @@ import Banner01 from './Banner/Banner01'
 import Banner02 from './Banner/Banner02'
 import Banner03 from './Banner/Banner03'
 import Banner04 from './Banner/Banner04'
+import Banner05 from './Banner/Banner05'
 
 export default function HomePage() {
     const authCtx = useContext(AuthContext)
@@ -17,6 +18,9 @@ export default function HomePage() {
             </div>
             <div className='my-5'>
                 <Banner02/>
+            </div>
+            <div>
+                <Banner05/>
             </div>
             <div>
                 <Banner03/>
