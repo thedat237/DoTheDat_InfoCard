@@ -5,10 +5,39 @@
     padding-top: 20px;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
-.card-img img{
+.card-items{
+    width: 100%;
+    height: 370px;
+}
+.card-img-front img, .card-img-back img{
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.card-img-inner {
+    position: relative;
+    transition: transform 1.5s;
+    transform-style: preserve-3d;
+    /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); */
+}
+
+.card-img:hover .card-img-inner {
+    transform: rotateY(180deg);
+}
+
+.card-img-front, .card-img-back {
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.card-img-back {
+    transform: rotateY(180deg);
+}
+.card-detail{
+    position: relative;
+    top: 242px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 .card-detail-title{
 

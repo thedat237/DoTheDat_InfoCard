@@ -28,6 +28,7 @@ const Cart = createSlice({
         UPDATECART(state, action) {
             state.product=[...action.payload]
             state.items=action.payload.length
+            console.log("kkk", state.product);
         },
         BUYPRODUCT(state, action) {
             let result = []

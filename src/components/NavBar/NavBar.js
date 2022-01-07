@@ -10,14 +10,17 @@ import { connect, useDispatch } from 'react-redux'
 import ModalCart from '../HomePage/Modal/ModalCart'
 import { BUYPRODUCT, UPDATECART } from '../../redux/reducer/cart'
 import ModalSuccess from '../HomePage/Modal/ModalSuccess'
+import ModalBuyInCart from '../HomePage/Modal/ModalBuyInCart'
 const NavBar = ({Infor, CartItems, CartProduct}) => {
     const authCtx = useContext(AuthContext)
     const [showModalCart,setShowModalCart] =useState(false)
-    const [showModal, setShowModal] = useState(false)
+    const [showModalBuyCart, setShowModalBuyCart] = useState(false)
     const dispatch = useDispatch()
-    
+    const dataShoppingSuccess = JSON.parse(localStorage.getItem("shoppingSuccess")) || []
     const updateCart = () => {
         const dataCart = JSON.parse(localStorage.getItem("Cart"))
+       
+        console.log(dataCart);
         if(CartItems === 0) {
             if(dataCart){
                 dispatch({
@@ -26,9 +29,10 @@ const NavBar = ({Infor, CartItems, CartProduct}) => {
                 })
             }
         }
+
     }
     const handleBuyItems = () => {
-        setShowModal(false)
+        setShowModalBuyCart(false)
     }
 
     useEffect(() => {
@@ -58,7 +62,7 @@ const NavBar = ({Infor, CartItems, CartProduct}) => {
                                 <li className="header-menu-item">
                                     <Link to={`/tao-the/${authCtx.user.id}`} className="header-menu-link text-decoration-none fw-bold fs-6 text">Tạo thẻ</Link>
                                 </li>
-                                {Infor !== "" ?   
+                                {Infor.length !== 0 || dataShoppingSuccess.length !== 0 ?   
                                     <li className="header-menu-item">
                                         <Link to={`/thong-tin-scan/${authCtx.user.id}`} className="header-menu-link text-decoration-none fw-bold fs-6 text">Thông tin thẻ</Link>
                                     </li> 
@@ -80,10 +84,16 @@ const NavBar = ({Infor, CartItems, CartProduct}) => {
                                 </div>
                             </div>
                             <ModalCart show={showModalCart} 
-                                onHide={() => {setShowModal(true)
+                                onCloseModalCart={() => {
                                     setShowModalCart(false)
-                            }}/>
-                            <ModalSuccess show={showModal} onHide={handleBuyItems} handleCloseModal={handleBuyItems}/>
+                                }}
+                                showModalBuyCart={() => {
+                                    setShowModalCart(false)
+                                    setShowModalBuyCart(true)
+                                }}
+                            />
+                            {/* <ModalBuyInCart show={showModalBuyCart} handleCloseModalBuyCart={handleBuyItems}/> */}
+                            <ModalSuccess show={showModalBuyCart} handleCloseModal={handleBuyItems}/>
                         </>
                         :
                         <>
@@ -117,7 +127,7 @@ const NavBar = ({Infor, CartItems, CartProduct}) => {
     )
 }
 const maptoStatetoProps = (state) => ({
-    Infor: state.Infor.nameUser,
+    Infor: state.Infor.data,
     CartItems: state.Cart.items,
     CartProduct: state.Cart.product
 })

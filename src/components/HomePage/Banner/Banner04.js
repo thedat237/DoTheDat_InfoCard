@@ -4,7 +4,7 @@ import cardType from '../../../data/dataCard'
 import InforScan from '../../InforScan/InforScan'
 import QRCode from "qrcode.react"
 import logoScan from "../../../assets/logo_scan.png"
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import AuthContext from '../../../context/auth'
 import {Dropdown, FormControl, InputGroup, DropdownButton, Modal, Button } from "react-bootstrap"
 import socialNetWork from '../../../data/socialNetWork'
@@ -14,8 +14,9 @@ import DropDownLink from '../../DropDown/DropDownLink'
 import { connect, useDispatch } from 'react-redux'
 import { SAVECART } from '../../../redux/reducer/infor'
 import { ADDPRODUCT, BUYPRODUCT } from '../../../redux/reducer/cart'
-const Banner04 = ({Infor, Cart}) => {
+const Banner04 = ({Infor, Cart, ShoppingCart}) => {
     const authCtx = useContext(AuthContext)
+    const navigate = useNavigate()
     const [selectedImg, setSelectedImg] = useState(cardType[0].src)
     const [selectedNameCard, setSelectedNameCard] = useState(cardType[0].name)
     const dispatch = useDispatch()
@@ -26,6 +27,7 @@ const Banner04 = ({Infor, Cart}) => {
     const [socials, setSocials] = useState([
         {socialName: socialName, socialLink: ""},
     ])
+    const [newData, setNewData] = useState([])
     
     const handleSelectSocial = (item) => {
         let result = socials
@@ -47,11 +49,8 @@ const Banner04 = ({Infor, Cart}) => {
     const [showModal, setShowModal] = useState(false);
     
     const handleBuyItems = () => {
-        dispatch({
-            type: BUYPRODUCT,
-            payload: Cart.product
-        })
         setShowModal(false)
+        navigate(`/thong-tin-scan/${authCtx.user.id}`)
     }
 
     // const handleShowModal = () => {
@@ -111,13 +110,16 @@ const Banner04 = ({Infor, Cart}) => {
     }
     console.log("add to cart", Cart);
 
-    const buyInfoCard = (newData) => {
+    const buyInfoCard = () => {
+        console.log("new data", newData);
+        let result=[]
+        result.push(newData)
         dispatch({
             type: SAVECART,
             payload: newData
         })
-        const jsonData = JSON.stringify(newData)
-        localStorage.setItem("dataQR", jsonData)
+        localStorage.setItem("dataQR", JSON.stringify(newData))
+        localStorage.setItem("shoppingSuccess", JSON.stringify(result))
         setShowModal(true)
     }
 
@@ -126,10 +128,12 @@ const Banner04 = ({Infor, Cart}) => {
         if(typeButton === 1) {
             addToCart(data)
         } else {
-            buyInfoCard(data)
+            setShowModal(true)
+            setNewData(data)
+            localStorage.setItem("dataQR", JSON.stringify(data))
         }
     }
-
+    // buyInfoCard(data)
     const randId = () =>{
         return Math.random().toString(36).replace('0.',  '');
     }
@@ -295,7 +299,14 @@ const Banner04 = ({Infor, Cart}) => {
                             {name === ""  ?
                                 (<ModalEmptyInput show={showModal} onClose={handleBuyItems}/>) 
                                 :
-                                (<ModalSuccess show={showModal} onHide={handleBuyItems} handleCloseModal={handleBuyItems}/>)
+                                (<ModalSuccess show={showModal}
+                                    handleCancleModal={() => setShowModal(false)}
+                                    handleCloseModal={handleBuyItems}
+                                    isLiveShopping
+                                    buyInfoCard = {
+                                        () => buyInfoCard()
+                                    }
+                                />)
                             }
                         </form>
 
@@ -307,6 +318,7 @@ const Banner04 = ({Infor, Cart}) => {
 }
 const maptoStatetoProps = (state) => ({
     Infor: state.Infor,
+    ShoppingCart: state.Infor.data,
     Cart: state.Cart
 })
 export default connect(maptoStatetoProps, null)(Banner04)

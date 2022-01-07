@@ -6,7 +6,7 @@ import { connect, useDispatch } from 'react-redux'
 import { BUYPRODUCT, REMOVEPRODUCT, UPDATECART, UPDATESTORAGE } from '../../../redux/reducer/cart'
 import CheckBox from '../../CheckBox/CheckBox'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const ModalCart = (props) => {
     const [checkedBox, setCheckedBox] = useState(false)
@@ -18,7 +18,7 @@ const ModalCart = (props) => {
         // setCheckedBox(false)
         let dataUnSelect = result.filter((items) => items.id !== item.id)
         setResult(dataUnSelect)
-        console.log(dataUnSelect);
+        console.log("data unselect", dataUnSelect);
     }
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const ModalCart = (props) => {
         let dataSelect = result
         dataSelect.push(items)
         setResult(dataSelect)
-        console.log(dataSelect);
+        console.log("data select", dataSelect);
     }
 
     const removeProduct = (items) => {
@@ -46,6 +46,7 @@ const ModalCart = (props) => {
             payload: result
         })
         setShowModal(false)
+        localStorage.setItem("dataQR", JSON.stringify(result))
     }
 
 
@@ -72,10 +73,11 @@ const ModalCart = (props) => {
             size="md"
             dialogClassName='modal-cart'
         >
-            <Modal.Header closeButton>
+            <Modal.Header className='d-flex justify-content-between align-items-center'>
                 <Modal.Title id="contained-modal-title-vcenter">
                 Thẻ của bạn
                 </Modal.Title>
+                <FontAwesomeIcon icon={faTimes} className='fs-4 text-muted cursor-pointer' onClick={() => props.onCloseModalCart()}/>
             </Modal.Header>
             <Modal.Body>
                 {props.Cart.map((item,idx) => (
@@ -108,15 +110,17 @@ const ModalCart = (props) => {
                     </div>
                 ))}
             </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={() => 
-                    {buyProduct()
-                    props.onHide()
-                }}
-                >
-                    Đặt mua
-                </Button>
-            </Modal.Footer>
+            {props.Cart.length !== 0 &&
+                <Modal.Footer>
+                    <Button onClick={() => 
+                        {buyProduct()
+                        props.showModalBuyCart()
+                    }}
+                    >
+                        Đặt mua
+                    </Button>
+                </Modal.Footer>
+            }
         </Modal>
     )
 }

@@ -1,16 +1,12 @@
-import React, {useContext, useState} from 'react'
-import "./ModalSuccess.css"
+import React, {useState} from 'react'
+import "./ModalBuyInCart.css"
 import { Modal, Button } from 'react-bootstrap'
 import { connect, useDispatch } from 'react-redux'
 import { BUYPRODUCT, UPDATECART } from '../../../redux/reducer/cart'
 import { SAVECART } from '../../../redux/reducer/infor'
-import { useNavigate } from 'react-router-dom'
-import AuthContext from '../../../context/auth'
 
-const ModalSuccess = (props) => {
-    const data=JSON.parse(localStorage.getItem("dataQR"))
-    const authCtx = useContext(AuthContext)
-    const navigate = useNavigate()
+const ModalBuyInCart = (props) => {
+    const userInfor= JSON.parse(localStorage.getItem("dataQR"))
     const dispatch = useDispatch()
     const [valueModal, setValueModal] = useState({
         email: "",
@@ -31,31 +27,16 @@ const ModalSuccess = (props) => {
 
     const Shopping = () => {
         let result = props.Cart.filter(item => props.ShoppingCart.every(data => data.id !== item.id))
-        if(result.length === 0){
-            dispatch({
-                type: UPDATECART,
-                payload: []
-            })
-            dispatch({
-                type: SAVECART,
-                payload: props.ShoppingCart
-            })
-            localStorage.setItem("Cart", JSON.stringify([]))
-            localStorage.setItem("shoppingSuccess", JSON.stringify(props.ShoppingCart))
-        } else {
-            dispatch({
-                type: UPDATECART,
-                payload: result
-            })
-            dispatch({
-                type: SAVECART,
-                payload: props.ShoppingCart
-            })
-            localStorage.setItem("Cart", JSON.stringify(result))
-            localStorage.setItem("shoppingSuccess", JSON.stringify(props.ShoppingCart))
-        }
         console.log("shopping",result);
-        navigate(`/thong-tin-scan/${authCtx.user.id}`)
+        dispatch({
+            type: UPDATECART,
+            payload: result
+        })
+        dispatch({
+            type: SAVECART,
+            payload: result
+        })
+        localStorage.setItem("Cart", JSON.stringify(result))
     }
 
     return (
@@ -71,12 +52,16 @@ const ModalSuccess = (props) => {
             </Modal.Header>
             <Modal.Body>
                 <div className='d-flex mb-2'>
-                    <h5>Tên trên thẻ:</h5>
-                    <h5 className='ms-3'>{data === null ? "Tên người dùng" : data.nameUser}</h5>
+                    <h5>Số lượng thẻ mua:</h5>
+                    <h5 className='ms-3'>{userInfor === null ? null : userInfor.length}</h5>
                 </div>
                 <div className='d-flex mb-2'>
                     <h5>Loại thẻ:</h5>
-                    <h5 className='ms-3'>{data === null ? "Thẻ cơ bản" : data.colorCard}</h5>
+                    {userInfor ? userInfor.map((item, idx) => {
+                        return <h5 className='ms-3' key={idx}>{item?.colorCard}</h5>
+                        })
+                        : null
+                    }
                 </div>
                 <div className='d-flex flex-column'>
                     <h5>Vui lòng nhập các thông tin sau:</h5>
@@ -116,16 +101,12 @@ const ModalSuccess = (props) => {
                 </div> 
             </Modal.Body>
             <Modal.Footer className='d-flex'>
-                <Button variant="danger" onClick={() => {props.handleCancleModal()
+                <Button variant="danger" onClick={() => {props.handleCloseModalBuyCart()
                 }}>
                     Hủy
                 </Button>
-                <Button variant="primary" onClick={() => {props.handleCloseModal()
-                    if(props.isLiveShopping) {
-                        props.buyInfoCard()
-                    } else {
-                        Shopping()
-                    }
+                <Button variant="primary" onClick={() => {props.handleCloseModalBuyCart()
+                    Shopping()
                 }}>
                     Mua
                 </Button>
@@ -134,8 +115,7 @@ const ModalSuccess = (props) => {
     )
 }
 const maptoStatetoProps = (state) => ({
-    Infor: state.Infor.data,
     Cart: state.Cart.product,
     ShoppingCart: state.Cart.cart
 })
-export default connect(maptoStatetoProps, null)(ModalSuccess)
+export default connect(maptoStatetoProps, null)(ModalBuyInCart)
